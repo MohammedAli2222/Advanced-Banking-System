@@ -1,3 +1,5 @@
+/**
+
 package com.bank.payments;
 
 import com.bank.core.Account;
@@ -5,7 +7,7 @@ import com.bank.utils.Money;
 
 /**
  * Adapter for a legacy bank gateway (simulated).
- */
+
 public class LegacyBankGatewayAdapter implements PaymentProcessor {
 
     // Simulate legacy API integration
@@ -18,3 +20,5 @@ public class LegacyBankGatewayAdapter implements PaymentProcessor {
         return true;
     }
 }
+
+ */
