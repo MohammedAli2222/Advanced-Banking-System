@@ -1,22 +1,34 @@
 package com.bank.utils;
 
-import com.bank.core.Account;
+import com.bank.core.AccountComponent;
 
 public class AccountEvent {
-    private String eventType;
-    private Account account;
-    private Money amount;
-    private String details;
 
-    public AccountEvent(String eventType, Account account, Money amount, String details) {
-        this.eventType = eventType;
+    private final AccountComponent account;
+    private final String eventType;
+    private final String details;
+    private final Money amount; // إذا موجود
+
+    public AccountEvent(AccountComponent account, String eventType, String details, Money amount) {
         this.account = account;
-        this.amount = amount;
+        this.eventType = eventType;
         this.details = details;
+        this.amount = amount;
     }
 
-    public String getEventType() { return eventType; }
-    public Account getAccount() { return account; }
-    public Money getAmount() { return amount; }
-    public String getDetails() { return details; }
+    public AccountComponent getAccount() {
+        return account;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public Money getAmount() {
+        return amount;
+    }
 }

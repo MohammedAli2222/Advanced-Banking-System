@@ -4,17 +4,16 @@ import com.bank.utils.Money;
 import com.bank.utils.TransactionType;
 
 public interface AccountStrategy {
-    // حساب الفوائد على الرصيد
-    Money calculateInterest(Money balance);
+    // مضاف: معامل interestRate
+    Money calculateInterest(Money balance, double interestRate);
 
-    // تطبيق الرسوم (مثل رسوم شهرية أو على السحب)
     Money applyFees(Money balance);
 
-    // قواعد السحب (مثل حد أدنى أو رسوم إضافية) - يرجع الرسوم الإضافية إذا وجدت
-    Money withdrawRules(Money amount, Money balance);
+    // مضاف: معامل overdraftLimit
+    Money withdrawRules(Money amount, Money balance, Money overdraftLimit);
 
-    // قواعد الإيداع (بعض الحسابات قد تمنح bonus)
     Money depositRules(Money amount);
 
-    Money applyRules(Money amount, TransactionType type, Money balance);
+    // مضاف: المعاملات الجديدة للدالة العامة
+    Money applyRules(Money amount, TransactionType type, Money balance, double interestRate, Money overdraftLimit);
 }

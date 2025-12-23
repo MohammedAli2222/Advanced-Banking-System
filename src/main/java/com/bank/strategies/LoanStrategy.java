@@ -2,16 +2,15 @@ package com.bank.strategies;
 
 import com.bank.utils.Money;
 import com.bank.utils.TransactionType;
-
 import java.math.BigDecimal;
 
 public class LoanStrategy implements AccountStrategy {
-    private static final BigDecimal LOAN_INTEREST_RATE = new BigDecimal("0.06"); // 6% على الدين
 
     @Override
-    public Money calculateInterest(Money balance) {
+    public Money calculateInterest(Money balance, double interestRate) {
+        // الفائدة على القرض (الدين)
         BigDecimal debt = balance.getAmount().abs();
-        BigDecimal interest = debt.multiply(LOAN_INTEREST_RATE);
+        BigDecimal interest = debt.multiply(BigDecimal.valueOf(interestRate));
         return new Money(interest, balance.getCurrency());
     }
 
@@ -21,31 +20,19 @@ public class LoanStrategy implements AccountStrategy {
     }
 
     @Override
-    public Money withdrawRules(Money amount, Money balance) {
-        return amount;
+    public Money withdrawRules(Money amount, Money balance, Money overdraftLimit) {
+        // لا يسمح بالسحب من حساب القرض عادةً
+        throw new UnsupportedOperationException("Cannot withdraw from a Loan account.");
     }
 
     @Override
-    public Money depositRules(Money amount) {
-        return amount;
-    }
+    public Money depositRules(Money amount) { return amount; }
 
     @Override
-    public Money applyRules(Money amount, TransactionType type, Money balance) {
-        // مثال: قواعد بسيطة, يمكن تخصيص حسب النوع
+    public Money applyRules(Money amount, TransactionType type, Money balance, double interestRate, Money overdraftLimit) {
         if (type == TransactionType.DEPOSIT) {
-            // bonus لإيداع كبير
-            if (amount.getAmount().compareTo(new BigDecimal("5000.00")) > 0) {
-                BigDecimal bonus = amount.getAmount().multiply(new BigDecimal("0.01"));
-                return amount.add(new Money(bonus, amount.getCurrency()));
-            }
-        } else if (type == TransactionType.WITHDRAWAL) {
-            // رسوم إضافية إذا رصيد منخفض
-            if (balance.getAmount().compareTo(new BigDecimal("1000.00")) < 0) {
-                BigDecimal fee = new BigDecimal("10.00");
-                return amount.add(new Money(fee, amount.getCurrency()));
-            }
+            return depositRules(amount);
         }
-        return amount;
+        return new Money(BigDecimal.ZERO, amount.getCurrency());
     }
 }

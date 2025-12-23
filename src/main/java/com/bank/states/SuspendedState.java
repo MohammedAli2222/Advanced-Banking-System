@@ -3,51 +3,93 @@ package com.bank.states;
 import com.bank.core.Account;
 import com.bank.utils.Money;
 import com.bank.utils.TransactionType;
+import com.bank.utils.AccountEvent;
+import com.bank.utils.PrintUtil;
 
 public class SuspendedState implements AccountState {
 
     @Override
     public void deposit(Account account, Money amount) {
-        System.out.println("Deposit not allowed in Suspended state.");
-        throw new IllegalStateException("Account is suspended");
+        PrintUtil.println("❌ Rejected: Account is Suspended.");
+
+        account.notifyObservers(new AccountEvent(
+                account,
+                TransactionType.DEPOSIT.name(),
+                "Deposit rejected: Account is Suspended",
+                amount
+        ));
+
+        throw new IllegalStateException("Account suspended");
     }
 
     @Override
     public void withdraw(Account account, Money amount) {
-        System.out.println("Withdrawal not allowed in Suspended state.");
-        throw new IllegalStateException("Account is suspended");
+        PrintUtil.println("❌ Rejected: Account is Suspended.");
+
+        account.notifyObservers(new AccountEvent(
+                account,
+                TransactionType.WITHDRAWAL.name(),
+                "Withdrawal rejected: Account is Suspended",
+                amount
+        ));
+
+        throw new IllegalStateException("Account suspended");
     }
 
     @Override
     public void close(Account account) {
         account.setState(new ClosedState());
-        System.out.println("Account closed from Suspended state.");
+
+        account.notifyObservers(new AccountEvent(
+                account,
+                "STATE_CHANGE",
+                "Suspended account closed",
+                null
+        ));
+
+        PrintUtil.println("Suspended account closed.");
     }
 
     @Override
     public void freeze(Account account) {
         account.setState(new FrozenState());
-        System.out.println("Account frozen from Suspended state.");
+
+        account.notifyObservers(new AccountEvent(
+                account,
+                "STATE_CHANGE",
+                "Suspended account frozen",
+                null
+        ));
+
+        PrintUtil.println("Suspended account frozen.");
     }
 
     @Override
     public void suspend(Account account) {
-        System.out.println("Account is already suspended.");
+        PrintUtil.println("Account is already suspended.");
     }
 
     @Override
     public void activate(Account account) {
         account.setState(new ActiveState());
-        System.out.println("Account activated from Suspended state.");
+
+        account.notifyObservers(new AccountEvent(
+                account,
+                "STATE_CHANGE",
+                "Account reactivated from Suspended",
+                null
+        ));
+
+        PrintUtil.println("✅ Suspension lifted: Account Active.");
     }
 
     @Override
     public String getStateDescription() {
-        return "Suspended - All operations blocked except admin actions";
+        return "Suspended - All financial operations blocked";
     }
 
     @Override
     public boolean validateOperation(TransactionType type) {
-        return false;  // مفيش عمليات
+        return false;
     }
 }

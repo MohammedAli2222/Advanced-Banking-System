@@ -11,11 +11,15 @@ public class ReportLeaf implements ReportComponent {
 
     @Override
     public String generate() {
+        String dateStr = (account.getCreationDate() != null)
+                ? account.getCreationDate().toString()
+                : "N/A";
+
         return "=== Account Report ===\n" +
                 "Account Number: " + account.getAccountNumber() + "\n" +
                 "Balance: " + account.getBalance() + "\n" +
                 "State: " + account.getStateDescription() + "\n" +
-                "Creation Date: " + account.getCreationDate() + "\n";
+                "Creation Date: " + dateStr + "\n";
     }
 
     @Override

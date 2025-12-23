@@ -1,33 +1,26 @@
 package com.bank.security;
 
 public class AccessControlManager {
+
     private UserState currentState;
 
     public AccessControlManager(UserState initialState) {
         this.currentState = initialState;
     }
 
-    public boolean isAllowed(String operation) {
-        if ("createAccount".equals(operation)) {
-            return currentState.canCreateAccount();
-        } else if ("normalTransaction".equals(operation)) {
-            return currentState.canProcessNormalTransaction();
-        } else if ("largeTransaction".equals(operation)) {
-            return currentState.canProcessLargeTransaction();
-        } else if ("freezeAccount".equals(operation)) {
-            return currentState.canFreezeAccount();
-        } else if ("suspendAccount".equals(operation)) {
-            return currentState.canSuspendAccount();
-        } else if ("closeAccount".equals(operation)) {
-            return currentState.canCloseAccount();
-        } else if ("viewReports".equals(operation)) {
-            return currentState.canViewReports();
-        } else if ("handleTicket".equals(operation)) {
-            return currentState.canHandleSupportTicket();
-        } else if ("approveTransaction".equals(operation)) {
-            return currentState.canApproveTransaction();
-        } else {
-            return false;
+    public boolean isAllowed(Operation op) {
+        switch (op) {
+            case CREATE_ACCOUNT: return currentState.canCreateAccount();
+            case NORMAL_TRANSACTION: return currentState.canProcessNormalTransaction();
+            case LARGE_TRANSACTION: return currentState.canProcessLargeTransaction();
+            case FREEZE_ACCOUNT: return currentState.canFreezeAccount();
+            case SUSPEND_ACCOUNT: return currentState.canSuspendAccount();
+            case CLOSE_ACCOUNT: return currentState.canCloseAccount();
+            case VIEW_REPORTS: return currentState.canViewReports();
+            case HANDLE_TICKET: return currentState.canHandleSupportTicket();
+            case APPROVE_TRANSACTION: return currentState.canApproveTransaction();
+            case INTERNATIONAL_TRANSFER: return ((AbstractUserState)currentState).canProcessInternationalTransfer();
+            default: return false;
         }
     }
 

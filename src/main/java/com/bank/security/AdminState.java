@@ -1,33 +1,21 @@
 package com.bank.security;
 
-public class AdminState implements UserState {
-    @Override
-    public boolean canCreateAccount() { return true; }
+public class AdminState extends AbstractUserState {
+
+    public AdminState() {
+        permissions.add(Operation.CREATE_ACCOUNT);
+        permissions.add(Operation.NORMAL_TRANSACTION);
+        permissions.add(Operation.LARGE_TRANSACTION);
+        permissions.add(Operation.FREEZE_ACCOUNT);
+        permissions.add(Operation.SUSPEND_ACCOUNT);
+        permissions.add(Operation.CLOSE_ACCOUNT);
+        permissions.add(Operation.VIEW_REPORTS);
+        permissions.add(Operation.HANDLE_TICKET);
+        permissions.add(Operation.APPROVE_TRANSACTION);
+    }
 
     @Override
-    public boolean canProcessNormalTransaction() { return true; }
-
-    @Override
-    public boolean canProcessLargeTransaction() { return true; }
-
-    @Override
-    public boolean canFreezeAccount() { return true; }
-
-    @Override
-    public boolean canSuspendAccount() { return true; }
-
-    @Override
-    public boolean canCloseAccount() { return true; }
-
-    @Override
-    public boolean canViewReports() { return true; }
-
-    @Override
-    public boolean canHandleSupportTicket() { return true; }
-
-    @Override
-    public boolean canApproveTransaction() { return true; }
-
-    @Override
-    public String getRoleName() { return "Admin"; }
+    public String getRoleName() {
+        return "Admin";
+    }
 }

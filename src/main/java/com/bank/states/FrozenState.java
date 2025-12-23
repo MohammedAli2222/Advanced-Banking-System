@@ -3,46 +3,84 @@ package com.bank.states;
 import com.bank.core.Account;
 import com.bank.utils.Money;
 import com.bank.utils.TransactionType;
+import com.bank.utils.AccountEvent;
 import com.bank.utils.PrintUtil;
 
-/**
- * Frozen state: يسمح بالإيداعات فقط، ويسبِّب رفض السحب.
- */
 public class FrozenState implements AccountState {
 
     @Override
     public void deposit(Account account, Money amount) {
-        account.applyBalanceChange(account.getBalance().add(amount));
-        PrintUtil.println("Deposit successful in Frozen state: " + amount);
+        account.applyBalanceChange(amount, TransactionType.DEPOSIT);
+
+        account.notifyObservers(new AccountEvent(
+                account,
+                TransactionType.DEPOSIT.name(),
+                "Deposit processed in Frozen state",
+                amount
+        ));
+
+        PrintUtil.println("Deposit processed in Frozen state: " + amount);
     }
 
     @Override
     public void withdraw(Account account, Money amount) {
-        PrintUtil.println("Withdrawal not allowed in Frozen state.");
-        throw new IllegalStateException("Account is frozen");
+        PrintUtil.println("🛡️ Security Alert: Withdrawal blocked! Account is Frozen.");
+
+        account.notifyObservers(new AccountEvent(
+                account,
+                TransactionType.WITHDRAWAL.name(),
+                "Withdrawal blocked! Account is Frozen",
+                amount
+        ));
+
+        throw new IllegalStateException("Operation failed: Account is frozen and does not allow withdrawals.");
     }
 
     @Override
     public void close(Account account) {
         account.setState(new ClosedState());
+
+        account.notifyObservers(new AccountEvent(
+                account,
+                "STATE_CHANGE",
+                "Account closed from Frozen state",
+                null
+        ));
+
         PrintUtil.println("Account closed from Frozen state.");
     }
 
     @Override
     public void freeze(Account account) {
-        PrintUtil.println("Account is already frozen.");
+        PrintUtil.println("Notice: Account is already in Frozen state.");
     }
 
     @Override
     public void suspend(Account account) {
         account.setState(new SuspendedState());
-        PrintUtil.println("Account suspended from Frozen state.");
+
+        account.notifyObservers(new AccountEvent(
+                account,
+                "STATE_CHANGE",
+                "Account moved from Frozen to Suspended",
+                null
+        ));
+
+        PrintUtil.println("Account moved from Frozen to Suspended state.");
     }
 
     @Override
     public void activate(Account account) {
         account.setState(new ActiveState());
-        PrintUtil.println("Account activated from Frozen state.");
+
+        account.notifyObservers(new AccountEvent(
+                account,
+                "STATE_CHANGE",
+                "Account reactivated from Frozen",
+                null
+        ));
+
+        PrintUtil.println("✅ Account has been reactivated.");
     }
 
     @Override

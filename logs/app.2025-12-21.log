@@ -1,0 +1,2 @@
+2025-12-21 12:24:27 [] [main] INFO  com.bank.core.Account - Account CHK-1001 state changed to: Closed - No operations allowed
+2025-12-21 12:24:27 [] [main] INFO  com.bank.core.Account - Account CHK-1001 closed

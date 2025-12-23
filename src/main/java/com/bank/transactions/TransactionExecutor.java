@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class TransactionExecutor {
+
     private final ExecutorService pool;
     private final TransactionHandler transactionChain;
 
@@ -13,20 +14,18 @@ public class TransactionExecutor {
         this.pool = Executors.newFixedThreadPool(threadPoolSize);
     }
 
-    /**
-     * Submit a transaction for asynchronous processing.
-     * Returns a Future that completes when processing finishes.
-     */
     public Future<Void> submit(Transaction transaction) {
         return pool.submit(() -> {
-            transactionChain.handle(transaction);
+            try {
+                transactionChain.handle(transaction);
+            } catch (Exception e) {
+                // إعادة الرمي لتصل إلى الـ Facade
+                throw e;
+            }
             return null;
         });
     }
 
-    /**
-     * Submit many transactions and wait for them to finish (with timeout).
-     */
     public List<Future<Void>> submitAll(List<Transaction> transactions) {
         List<Future<Void>> futures = new ArrayList<>();
         for (Transaction t : transactions) {
@@ -41,4 +40,4 @@ public class TransactionExecutor {
             pool.shutdownNow();
         }
     }
-}   
+}

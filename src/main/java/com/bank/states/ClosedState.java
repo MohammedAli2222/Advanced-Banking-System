@@ -3,47 +3,44 @@ package com.bank.states;
 import com.bank.core.Account;
 import com.bank.utils.Money;
 import com.bank.utils.TransactionType;
+import com.bank.utils.AccountEvent;
+import com.bank.utils.PrintUtil;
 
 public class ClosedState implements AccountState {
 
     @Override
     public void deposit(Account account, Money amount) {
-        System.out.println("Cannot deposit into a closed account.");
         throw new IllegalStateException("Account is closed");
     }
 
     @Override
     public void withdraw(Account account, Money amount) {
-        System.out.println("Cannot withdraw from a closed account.");
         throw new IllegalStateException("Account is closed");
     }
 
     @Override
     public void close(Account account) {
-        System.out.println("Account is already closed.");
+        PrintUtil.println("Account already closed.");
     }
 
     @Override
     public void freeze(Account account) {
-        System.out.println("Cannot freeze a closed account.");
-        throw new IllegalStateException("Account is closed");
+        throw new IllegalStateException("Cannot freeze a closed account");
     }
 
     @Override
     public void suspend(Account account) {
-        System.out.println("Cannot suspend a closed account.");
-        throw new IllegalStateException("Account is closed");
+        throw new IllegalStateException("Cannot suspend a closed account");
     }
 
     @Override
     public void activate(Account account) {
-        System.out.println("Cannot activate a closed account.");
-        throw new IllegalStateException("Account is closed");
+        throw new IllegalStateException("Closed accounts cannot be reactivated");
     }
 
     @Override
     public String getStateDescription() {
-        return "Closed - No operations allowed";
+        return "Closed - Permanent";
     }
 
     @Override

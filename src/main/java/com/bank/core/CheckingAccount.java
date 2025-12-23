@@ -7,12 +7,19 @@ import com.bank.utils.Currency;
 import java.math.BigDecimal;
 
 public class CheckingAccount extends Account {
+    private Money overdraftLimit;
 
-    public CheckingAccount(String accountNumber, Money initialBalance) {
+    public CheckingAccount(String accountNumber, Money initialBalance, Money overdraftLimit) {
         super(accountNumber, initialBalance, new CheckingStrategy());
+        this.overdraftLimit = overdraftLimit;
     }
 
-    public CheckingAccount(String accountNumber) {
-        this(accountNumber, new Money(BigDecimal.ZERO, Currency.USD));
+    public boolean isOverdraftAllowed(Money amount) {
+        return getBalance().getAmount().add(overdraftLimit.getAmount()).compareTo(amount.getAmount()) >= 0;
+    }
+
+    @Override
+    public Money getOverdraftLimitInternal() {
+        return this.overdraftLimit; // الحقل الذي أضفناه اليوم في CheckingAccount
     }
 }

@@ -12,21 +12,26 @@ public abstract class AbstractTransactionHandler implements TransactionHandler {
 
     @Override
     public void handle(Transaction transaction) {
+        // 1. التحقق من شروط الـ Handler الحالي
         if (validate(transaction)) {
+            // 2. إذا وجد Handler تالٍ، نمرر المعاملة له
             if (nextHandler != null) {
                 nextHandler.handle(transaction);
             } else {
-                transaction.setStatus(TransactionStatus.COMPLETED);
+                // 3. إذا وصلنا لنهاية السلسلة (FinalExecutor)، ننفذ العملية
                 execute(transaction);
-                System.out.println("Transaction approved and completed: " + transaction);
             }
         } else {
+            // 4. إذا فشل التحقق في أي مرحلة، نوقف السلسلة فوراً
             transaction.setStatus(TransactionStatus.FAILED);
-            System.out.println("Transaction rejected: " + getRejectionReason());
+            // يمكن إضافة إشعار هنا أو Log للسبب
+            System.err.println("Transaction " + transaction.getTransactionId() +
+                    " halted at " + this.getClass().getSimpleName() +
+                    ": " + getRejectionReason());
         }
     }
 
     protected abstract boolean validate(Transaction transaction);
     protected abstract String getRejectionReason();
-    protected abstract void execute(Transaction transaction);  // تنفيذ الإيداع/سحب الفعلي
+    protected abstract void execute(Transaction transaction);
 }
