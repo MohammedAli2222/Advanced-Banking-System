@@ -44,3 +44,36 @@
 2025-12-22 13:06:55 [] [pool-1-thread-1] ERROR com.bank.transactions.FinalExecutor - Transaction TXN-a802a85b-03ef-4778-8120-444eda2fb8cf failed: Operation failed: Account is frozen and does not allow withdrawals.
 2025-12-22 13:08:35 [] [pool-1-thread-1] INFO  com.bank.transactions.FinalExecutor - Transaction TXN-e16400f7-5b0b-43ee-9005-7a18d1be4d2c completed successfully.
 2025-12-22 13:08:35 [] [pool-1-thread-2] ERROR com.bank.transactions.FinalExecutor - Transaction TXN failed: Overdraft limit exceeded! Max allowed with protection: 0
+2025-12-22 13:11:08 [] [pool-1-thread-1] INFO  com.bank.transactions.FinalExecutor - Transaction TXN-40e6fd87-01a0-4135-a22c-8f49fa754fd9 completed successfully.
+2025-12-22 13:11:08 [] [pool-1-thread-2] INFO  com.bank.transactions.FinalExecutor - Transaction TXN completed successfully.
+2025-12-22 13:11:08 [] [main] INFO  com.bank.core.Account - Account SA-202 state changed to: Frozen - Deposits allowed, withdrawals blocked
+2025-12-22 13:11:08 [] [pool-1-thread-1] ERROR com.bank.transactions.FinalExecutor - Transaction TXN-9e3af5bb-254d-4c0a-a618-ae752850f782 failed: Operation failed: Account is frozen and does not allow withdrawals.
+2025-12-22 14:45:35 [] [main] INFO  com.bank.customers.Customer - Customer أحمد المحارب created with ID C-001
+2025-12-22 14:45:35 [] [main] INFO  com.bank.customers.Customer - Added account CH-101 to customer C-001
+2025-12-22 14:45:35 [] [main] INFO  com.bank.customers.Customer - Added account SA-202 to customer C-001
+2025-12-22 14:45:35 [] [pool-1-thread-1] INFO  com.bank.transactions.FinalExecutor - Transaction TXN-13005e32-bf1e-4ece-a38d-e7c45934001e completed successfully.
+2025-12-22 14:45:35 [] [pool-1-thread-2] INFO  com.bank.transactions.FinalExecutor - Transaction TXN completed successfully.
+2025-12-22 14:45:35 [] [main] INFO  com.bank.core.Account - Account SA-202 state changed to: Frozen - Deposits allowed, withdrawals blocked
+2025-12-22 14:45:35 [] [pool-1-thread-1] ERROR com.bank.transactions.FinalExecutor - Transaction TXN-32904b82-302b-4f8e-ab71-55696a165778 failed: Operation failed: Account is frozen and does not allow withdrawals.
+2025-12-22 14:45:35 [] [main] INFO  com.bank.customers.Customer - Generated portfolio report for customer C-001
+2025-12-22 14:47:55 [] [main] INFO  com.bank.customers.Customer - Customer أحمد المحارب created with ID C-001
+2025-12-22 14:47:55 [] [main] INFO  com.bank.customers.Customer - Added account CH-101 to customer C-001
+2025-12-22 14:47:55 [] [main] INFO  com.bank.customers.Customer - Added account SA-202 to customer C-001
+2025-12-22 14:47:55 [] [pool-1-thread-1] INFO  com.bank.transactions.FinalExecutor - Transaction TXN-d234121b-0082-4503-aef7-3978bd05dd82 completed successfully.
+2025-12-22 14:47:55 [] [pool-1-thread-2] INFO  com.bank.transactions.FinalExecutor - Transaction TXN completed successfully.
+2025-12-22 14:47:55 [] [main] INFO  com.bank.core.Account - Account SA-202 state changed to: Frozen - Deposits allowed, withdrawals blocked
+2025-12-22 14:47:55 [] [pool-1-thread-1] ERROR com.bank.transactions.FinalExecutor - Transaction TXN-e0c5adb9-ca74-40d3-8fc7-d7f932530023 failed: Operation failed: Account is frozen and does not allow withdrawals.
+2025-12-22 14:47:55 [] [main] INFO  com.bank.customers.Customer - Generated portfolio report for customer C-001
+2025-12-22 15:21:23 [] [main] INFO  com.bank.customers.Customer - Customer أحمد المحارب created with ID C-001
+2025-12-22 15:21:23 [] [main] INFO  com.bank.customers.Customer - Added account CH-101 to customer C-001
+2025-12-22 15:21:23 [] [main] INFO  com.bank.customers.Customer - Added account SA-202 to customer C-001
+2025-12-22 15:21:23 [] [main] INFO  com.bank.customers.Customer - Total balance for customer C-001 calculated: 3000 USD
+2025-12-22 15:21:23 [] [main] INFO  com.bank.MainDemo - Demo finished: All accounts added correctly to Customer C-001 and Portfolio.
+2025-12-22 15:32:09 [] [main] INFO  com.bank.customers.Customer - Customer أحمد created with ID C-001
+2025-12-22 15:32:30 [] [main] INFO  com.bank.customers.Customer - Customer أحمد created with ID C-001
+2025-12-22 15:33:03 [] [main] INFO  com.bank.customers.Customer - Customer أحمد created with ID C-001
+2025-12-22 15:41:25 [] [main] INFO  com.bank.customers.Customer - Customer أحمد المحارب created with ID C-001
+2025-12-22 15:41:25 [] [main] INFO  com.bank.customers.Customer - Added account SA-101 to customer C-001
+2025-12-22 15:41:25 [] [main] INFO  com.bank.customers.Customer - Added account CH-202 to customer C-001
+2025-12-22 15:41:25 [] [main] INFO  com.bank.customers.Customer - Total balance for customer C-001 calculated: 3000 USD
+2025-12-22 15:41:25 [] [main] INFO  com.bank.MainDemo - Demo finished: All accounts added correctly to Customer C-001 and Portfolio.
